@@ -1,6 +1,6 @@
 # SavtasApp
 "SavtaApp" application for her (Android/IOS) with SignApp and LogIn functions
-At first stage will include:
+## At first stage will include:
 1. Microphone (dialog with SavtaNet Bot)
 2. After BOT made a routing desigion "SavtaApp" will popup with "HAVER" picture and name +connect button
 
