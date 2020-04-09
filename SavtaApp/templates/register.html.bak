@@ -31,12 +31,12 @@
 				</label>
 				<input type="text" name="address" placeholder="Address" id="address" required>
 				
-				<label for="birhtday">
+				<label for="birtday">
 				<i class="fas fa-lock"></i>
 				</label>
-				<input type="text" name="birthday" placeholder="Birthday" id="birthday" required>
+				<input type="text" name="birtday" placeholder="Birtday" id="birtday" required>
 
-				<label for="birthday">
+				<label for="birtday">
 				<i class="fas fa-lock"></i>
 				</label>
 				<input type="text" name="skills" placeholder="Skills" id="skills" required>
