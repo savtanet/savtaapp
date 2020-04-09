@@ -4,11 +4,13 @@ The main page of the LoveMySavta project
 \-SAVTA_DOCS - all DOCs, description, diagrams...
 
 \-SavtaApp - application for Savtas mobile
+..
 --\SignUp
 --\
+..
 \-RepApp - application for HEVRE mobile
 --\SignUp
-
+..
 ## At first stage will include:
 1. Microphone (dialog with SavtaNet Bot)
 2. After BOT made a routing desigion "SavtaApp" will popup with "HAVER" picture and name +connect button
