@@ -1,11 +1,11 @@
 # SavtaApp
 The main page of the LoveMySavta project
 ##Structure:
-<br /> 
+
 \-SAVTA_DOCS - all DOCs, description, diagrams...
-<br /> 
+
 \-SavtaApp - application for Savtas mobile
-<br /> 
+
 ..
 --\SignUp
 --\
