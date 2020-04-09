@@ -1,16 +1,20 @@
 # SavtaApp
 The main page of the LoveMySavta project
 ##Structure:
+<br /> 
 \-SAVTA_DOCS - all DOCs, description, diagrams...
-
+<br /> 
 \-SavtaApp - application for Savtas mobile
+<br /> 
 ..
 --\SignUp
 --\
 ..
+<br /> 
 \-RepApp - application for HEVRE mobile
 --\SignUp
 ..
+<br /> 
 ## At first stage will include:
 1. Microphone (dialog with SavtaNet Bot)
 2. After BOT made a routing desigion "SavtaApp" will popup with "HAVER" picture and name +connect button
