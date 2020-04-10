@@ -30,7 +30,7 @@ def login():
         password = request.form['password']
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
+        cursor.execute('SELECT * FROM savtas WHERE username = %s AND password = %s', (username, password,))
         # Fetch one record and return result
         account = cursor.fetchone()
         # If account exists in accounts table in out database
@@ -84,14 +84,12 @@ def register():
             msg = 'Invalid email address!'
         elif not re.match(r'[A-Za-z0-9]+', username):
             msg = 'Username must contain only characters and numbers!'
-        elif not username or not password or not email or not address or not birthday or not skills:
+        elif not  name or not birtday or not city or not street or not house or not appatrment or not floor or not elevator or not phone or not limitations or not livingwith:
             msg = 'Please fill out the form!'
         else:
-            # Account doesnt exists and the form data is valid, now insert new account into accounts table
+            # Account doesnt exists and the form data is valid, now insert new account into SAVTAS table
             ## have to fix SQL -->>>> 
-            cursor.execute('INSERT INTO accounts(id, username, password, email, address, birthday, skills) VALUES (NULL, wqa, qwa, aad@dadd.co, main, 123123, asd);')
-
-#           cursor.execute('INSERT INTO accounts VALUES (NULL, wqa, qwa, aad@dadd.co, main , 123123, asd)', (username, password, email, address, birthday, skills,))
+#           cursor.execute('INSERT INTO SAVTAS VALUES (NULL, hana, 111111, ashdod, main , 1, 2, 2, 0, 123123123123, no, asd)', ( id, name, birtday, city, street, house, appatrment, floor, elevator, phone, limitations, livingwith,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':

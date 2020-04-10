@@ -4,7 +4,7 @@
 {% block title %} Savtas Haver {% endblock %}
 
 {% block content %}
-<h2>Savtas Haver Home Page</h2>
+<h2>Home Page</h2>
 <p>Welcome back HAVER, {{ username }}!</p>
 </div>
 {% endblock %}
