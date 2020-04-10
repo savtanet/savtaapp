@@ -11,7 +11,7 @@
 			<h1>Register</h1>
 			<div class="links">
 				<a href="{{ url_for('login') }}">Login</a>
-				<a href="{{ url_for('register') }}" class="active">Register</a>
+				<a href="{{ url_for('register') }}" class="active">Registration</a>
 			</div>
 			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
 				<label for="username">
@@ -36,7 +36,7 @@
 				</label>
 				<input type="text" name="birthday" placeholder="Birthday" id="birthday" required>
 
-				<label for="birthday">
+				<label for="skills">
 				<i class="fas fa-lock"></i>
 				</label>
 				<input type="text" name="skills" placeholder="Skills" id="skills" required>

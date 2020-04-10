@@ -7,12 +7,12 @@ import re
 app = Flask(__name__)
 
 # Change this to your secret key (can be anything, it's for extra protection)
-app.secret_key = 'your secret key'
+app.secret_key = 'savta'
 
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = 'm159753123'
 app.config['MYSQL_DB'] = 'pythonlogin'
 
 # Intialize MySQL
@@ -64,16 +64,16 @@ def register():
     # Output message if something goes wrong...
     msg = ''
     # Check if "username", "password" and "email" and "address" and "birthday" and "skills" POST requests exist (user submitted form)
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'birhtday' in request.form and 'skills' in request.form:
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'birthday' in request.form and 'skills' in request.form:
         # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
         address = request.form['address']
-        birhtday = request.form['birhtday']
+        birthday = request.form['birthday']
         skills = request.form['skills']
         
-                # Check if account exists using MySQL
+         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
         account = cursor.fetchone()
@@ -87,16 +87,12 @@ def register():
         elif not username or not password or not email or not address or not birthday or not skills:
             msg = 'Please fill out the form!'
         else:
-            # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            ## have to fix SQL -->>>> 
-            cursor.execute('INSERT INTO accounts(id, username, password, email, address, birthday, skills) VALUES (NULL, wqa, qwa, aad@dadd.co, main, 123123, asd);')
-
-#           cursor.execute('INSERT INTO accounts VALUES (NULL, wqa, qwa, aad@dadd.co, main , 123123, asd)', (username, password, email, address, birthday, skills,))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s, %s, %s)', (username, password, email, address, birthday, skills,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
         # Form is empty... (no POST data)
-        msg = 'Please fill out the form, 	no post data!'
+        msg = 'Please fill out the form, no post data!'
     # Show registration form with message (if any)
     return render_template('register.html', msg=msg)
 

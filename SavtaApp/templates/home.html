@@ -3,7 +3,8 @@
 
 {% block title %}Home{% endblock %}
 
-{% block head %}
+
+{% block content %}
 <style>
 .dot {
 height:100px;
@@ -13,12 +14,10 @@ border-radius: 50%;
 display: inline-block;
 }
 </style>
-{% endblock %}
 
-{% block content %}
 <h2>Home Page</h2>
-<p>Welcome back, {{ username }}!</p>
+<p>Welcome back, {{ full_name }}!</p>
 
-<span class="dot"></span>
+<button type="button" onclick="alert('Hello world!')" border=0><span class="dot"></button>
 
 {% endblock %}

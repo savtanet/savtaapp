@@ -11,35 +11,56 @@
 			<h1>Register</h1>
 			<div class="links">
 				<a href="{{ url_for('login') }}">Login</a>
-				<a href="{{ url_for('register') }}" class="active">Register</a>
+				<a href="{{ url_for('register') }}" class="active">Registration</a>
 			</div>
 			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
-				<label for="username">
+				<label for="full_name">
 					<i class="fas fa-user"></i>
 				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
+				<input type="text" name="full_name" placeholder="Full_name" id="full_name" required>
+				
 				<label for="password">
 					<i class="fas fa-lock"></i>
 				</label>
 				<input type="password" name="password" placeholder="Password" id="password" required>
-				<label for="email">
-					<i class="fas fa-envelope"></i>
+				
+				<label for="age">
+					<i class="fas fa-lock"></i>
 				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
-				<label for="Address">
-				<i class="fas fa-lock"></i>
+				<input type="number" name="age" placeholder="Age" id="age" required></input>
+				
+				<label for="address">
+					<i class="fas fa-lock"></i>
 				</label>
 				<input type="text" name="address" placeholder="Address" id="address" required>
 				
-				<label for="birhtday">
-				<i class="fas fa-lock"></i>
+				<label for="floor">
+					<i class="fas fa-lock"></i>
 				</label>
-				<input type="text" name="birthday" placeholder="Birthday" id="birthday" required>
+				<input type="number" name="floor" placeholder="Floor" id="floor" required>
 
-				<label for="birthday">
-				<i class="fas fa-lock"></i>
+				<label for="elevator">
+					<i class="fas fa-lock"></i>
 				</label>
-				<input type="text" name="skills" placeholder="Skills" id="skills" required>
+				<input type="text" name="elevator" placeholder="Elevator" id="elevator" required>
+				
+				<label for="phone_number">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="text" name="phone_number" placeholder="Phone_number" id="phone_number" required>
+				
+				<label for="limitations">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="text" name="limitations" placeholder="Limitations" id="limitations" required>
+				
+				<label for="people_living_with">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="text" name="people_living_with" placeholder="People_living_with" id="people_living_with" required>
+				<label for="people_living_with">
+					<i class="fas fa-lock"></i>
+				</label>
 				
 				<div class="msg">{{ msg }}</div>
 				

@@ -12,7 +12,7 @@ app.secret_key = 'your secret key'
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = 'm159753123'
 app.config['MYSQL_DB'] = 'pythonlogin'
 
 # Intialize MySQL
@@ -23,14 +23,14 @@ mysql = MySQL(app)
 def login():
     # Output message if something goes wrong...
     msg = ''
-    # Check if "username" and "password" POST requests exist (user submitted form)
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+    # Check if "full_name" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'full_name' in request.form and 'password' in request.form:
         # Create variables for easy access
-        username = request.form['username']
+        full_name = request.form['full_name']
         password = request.form['password']
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM savtas WHERE username = %s AND password = %s', (username, password,))
+        cursor.execute('SELECT * FROM savtas WHERE full_name = %s AND password = %s', (full_name, password,))
         # Fetch one record and return result
         account = cursor.fetchone()
         # If account exists in accounts table in out database
@@ -38,12 +38,12 @@ def login():
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
             session['id'] = account['id']
-            session['username'] = account['username']
+            session['full_name'] = account['full_name']
             # Redirect to home page
             return redirect(url_for('home'))
         else:
-            # Account doesnt exist or username/password incorrect
-            msg = 'Incorrect username/password!'
+            # Account doesnt exist or full_name/password incorrect
+            msg = 'Incorrect full_name/password!'
     # Show the login form with message (if any)
     return render_template('index.html', msg=msg)
     
@@ -63,33 +63,31 @@ def logout():
 def register():
     # Output message if something goes wrong...
     msg = ''
-    # Check if "username", "password" and "email" and "address" and "birthday" and "skills" POST requests exist (user submitted form)
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'birhtday' in request.form and 'skills' in request.form:
+    if request.method == 'POST' and 'full_name' in request.form and 'password' in request.form and 'age' in request.form and 'address' in request.form and 'floor' in request.form and 'elevator' in request.form and 'phone_number' in request.form and 'limitations' in request.form and 'people_living_with' in request.form:
         # Create variables for easy access
-        username = request.form['username']
+        full_name = request.form['full_name']
         password = request.form['password']
-        email = request.form['email']
+        age = request.form['age']
         address = request.form['address']
-        birhtday = request.form['birhtday']
-        skills = request.form['skills']
+        floor = request.form['floor']
+        elevator = request.form['elevator']
+        phone_number = request.form['phone_number']
+        limitations = request.form['limitations']
+        people_living_with = request.form['people_living_with']
         
-                # Check if account exists using MySQL
+        # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM savtas WHERE full_name = %s and password=%s', (full_name,password,))
         account = cursor.fetchone()
         # If account exists show error and validation checks
         if account:
             msg = 'Account already exists!'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            msg = 'Invalid email address!'
-        elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'Username must contain only characters and numbers!'
-        elif not  name or not birtday or not city or not street or not house or not appatrment or not floor or not elevator or not phone or not limitations or not livingwith:
+        elif not re.match(r'[A-Za-z]+', full_name):
+            msg = 'Full name must contain only characters!'
+        elif not ('full_name' in request.form and 'password' in request.form and 'age' in request.form and 'address' in request.form and 'floor' in request.form and 'elevator' in request.form and 'phone_number' in request.form and 'limitations' in request.form and 'people_living_with' in request.form):
             msg = 'Please fill out the form!'
-        else:
-            # Account doesnt exists and the form data is valid, now insert new account into SAVTAS table
-            ## have to fix SQL -->>>> 
-#           cursor.execute('INSERT INTO SAVTAS VALUES (NULL, hana, 111111, ashdod, main , 1, 2, 2, 0, 123123123123, no, asd)', ( id, name, birtday, city, street, house, appatrment, floor, elevator, phone, limitations, livingwith,))
+        else:		
+            cursor.execute('INSERT INTO savtas VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (full_name, password, age, address, floor, elevator, phone_number, limitations, people_living_with,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
@@ -105,7 +103,7 @@ def home():
     # Check if user is loggedin
     if 'loggedin' in session:
         # User is loggedin show them the home page
-        return render_template('home.html', username=session['username'])
+        return render_template('home.html', full_name=session['full_name'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 

@@ -11,7 +11,7 @@
 			<h1>Haver, please Login</h1>
 			<div class="links">
 				<a href="{{ url_for('login') }}" class="active">Login</a>
-				<a href="#"> Registration</a>
+				<a href="{{ url_for('register') }}">Registration</a>
 			</div>
 			<form action="{{ url_for('login') }}" method="post">
 				<label for="username">
