@@ -12,7 +12,7 @@ app.secret_key = 'savta'
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'm159753123'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'pythonlogin'
 
 # Intialize MySQL

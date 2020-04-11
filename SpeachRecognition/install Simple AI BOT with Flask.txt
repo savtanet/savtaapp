@@ -1,0 +1,178 @@
+BUILDING A CHATBOT IN PYTHON USING FLASK – TUTORIAL
+SEPTEMBER 22, 2019
+In this article, we will build a simple chatbot in Python programming language. The pre-requisites of this article is familiarity with the Flask microframework. Before getting into the development part, let’s see some basics first.
+
+WHAT IS A CHATBOT?
+A chatbot is a computer program which conducts the conversation between the user and a computer by using textual or auditory means. It works as a real-world conversational partner.
+
+You have seen different chatbots in your life Siri, Cortana, Alexa and so forth. As per a review, the chatbot is required to finish around 80% of all work in the coming decades. Presently, chatbots are practically finishing 30% of the tasks. With the expanding boom, it has turned out to be imperative to learn Machine Learning and Artificial Intelligence.
+
+CHATBOT TASKS
+The tasks being done by chatbot are like:
+
+Present some information
+Make bookings
+Make calls etc.
+TYPES OF CHATBOTS
+There are two main types of chatbots:
+
+Self Learning Chatbots
+Rule-based Chatbots
+SELF LEARNING CHATBOTS
+Self learning chatbots use machine learning and artificial intelligence techniques. Such chatbots save the input from the users and use them later.
+
+RULE-BASED CHATBOTS
+Rule-based chatbots used some predefined set of rules. The responses of the chatbot are based on these rules. It means the solutions such chatbots provide are based on the rules defined.
+
+CHATTERBOT IN PYTHON
+ChatterBot is a Python’s library for chatbots. Consider the following things when you want to make a chatbot:
+
+Who is the target audience?
+What is the natural language of communication?
+Provide the responses for the target audience.
+Chatterbot is a library in Python which generates responses for the users. It uses a number of machine learning algorithms to produce a variety of responses. It is easy to make chatbots using the Chatterbot library in Python. The chatbot should be designed to be language-independent. It should be trained in multiple languages. The chatbot is trained by the data provided by the user.
+
+WORKING OF CHATTERBOT
+The chatterbot works in the following manner:
+
+Get the input from the user.
+Process the input.
+Returns the value that is generated with the highest confidence value.
+Return the response to the user.
+TRAINING THE CHATBOT
+You have made a chatbot. Now, how it would produce the responses that you want. For this, there is a library called chatterbot-corpus. It basically has all the responses. We use it to train the bot. Then, it generates the relevant responses that we want.
+
+DEVELOPING A CHATBOT USING FLASK
+We will make a Flask chatbot. Flask is a microframework used for web development. We will follow the process given below:
+
+Make a web app using the flask.
+Make a directory for the templates.
+Train the bot.
+Make conversation with the bot.
+PROJECT AND LIBRARIES SETUP
+I will be using PyCharm to develop this simple chatbot. Create a Flask project using PyCharm. Following libraries are required:
+
+chatterbot
+chatterbot-corpus
+pytz
+sqlite3
+You can easily install these libraries by going into File>Settings>Project Interpreter.
+
+I have already written the HTML template and CSS. You can just copy and paste it.
+
+
+
+index.html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1 class="jumbotron text-center">Chatterbot in Python using Flask Framework</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <div id="chatbox" class="border border-success">
+                <p class="botText"><span>Hi! I'm Chatterbot</span></p>
+            </div>
+            <div id="userInput">
+                <input id="textInput" class="form-control" type="text" name="msg" placeholder="Type Your Message Here">
+                <input id="buttonInput" class="btn btn-success form-control" type="submit" value="Send">
+            </div>
+        </div>
+    </div>
+<script>
+    function getResponse() {
+        let userText = $("#textInput").val();
+        let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+        $.get("/get", { msg: userText }).done(function(data) {
+        var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+        $("#chatbox").append(botHtml);
+        document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+});
+}
+    $("#textInput").keypress(function(e) {
+    //if enter key is pressed
+        if(e.which == 13) {
+            getResponse();
+        }
+    });
+    $("#buttonInput").click(function() {
+        getResponse();
+    });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>
+
+
+												style.css
+#textInput {
+    border: none;
+    border-bottom: 3px solid aqua;
+}
+.userText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+}
+.userText span {
+    background-color: #009688;
+    padding: 10px;
+    border-radius: 2px;
+}
+.botText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+.botText span {
+    background-color: #EF5350;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+
+														main.py
+
+#imports
+from flask import Flask, render_template, request
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+app = Flask(__name__)
+#create chatbot
+englishBot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
+trainer = ChatterBotCorpusTrainer(englishBot)
+trainer.train("chatterbot.corpus.english") #train the chatter bot for english
+#define app routes
+@app.route("/")
+def index():
+    return render_template("index.html")
+@app.route("/get")
+#function for the bot response
+def get_bot_response():
+    userText = request.args.get('msg')
+    return str(englishBot.get_response(userText))
+if __name__ == "__main__":
+    app.run()
+    
+    
+    
+
