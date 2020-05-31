@@ -65,7 +65,7 @@ Args:
 Return:
     String that represents a json object, containing the response from fb. | type: str
 '''
-def post_curl_request(nodes=['posts'], fields=[['id', 'created_time', 'message']], token_file='token.txt'):
+def get_posts_curl(nodes=['posts'], fields=[['message','from']], token_file='token.txt'):
     curl = pycurl.Curl()
     response = BytesIO()
     token = get_token_from_file(token_file)
@@ -83,6 +83,5 @@ def post_curl_request(nodes=['posts'], fields=[['id', 'created_time', 'message']
 
 
 if __name__ == "__main__":
-    json = post_curl_request()
+    json = get_posts_curl()
     print(json)
-    
