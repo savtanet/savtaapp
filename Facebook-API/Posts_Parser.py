@@ -27,6 +27,7 @@ class haver():
             if self.job.islower():
                 self.job = ' '.join(self.job.split(' ')[2:])
             self.relevant = True
+            print('Post relevant, registered')
         #if exception is raised then post isn't relevant.
         except :
             self.relevant = False
