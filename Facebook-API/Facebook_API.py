@@ -76,6 +76,7 @@ def get_posts_curl(nodes=['posts'], fields=[['message','from']], token_file='tok
     url = convert_to_curl(url)
 
     #curl session and settings.
+    print(url)
     curl.setopt(curl.URL, url)
     curl.setopt(curl.WRITEDATA, response)
     curl.perform()
