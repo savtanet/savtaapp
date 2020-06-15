@@ -1,20 +1,27 @@
 from Facebook_API import get_posts_curl
 import json
+import threading
+import sqlite3
+from sqlite3 import Error
+import time
 
+PATH_TO_DB = "haverim.db"
 
-class haver():
-    '''
-    Constructor:
-        Make new 'haver' object. If a post is parseable, then its assumed relevant, if not, then assume irrelevant.
-    Arguments:
-        entry: the post's json data. | type dictionary.
-    Returns:
-        New haver object. Check 'relevant' flag.
-    '''
+def startConnection():
+    try:
+        conn = sqlite3.connect(PATH_TO_DB)
+        c = conn.cursor()
+        return c, conn
+
+    except Error as e:
+        print(e)
+        return None, None
+
+class haver:
     def __init__(self, entry):
         try :
             #I will add support later
-            self.fam_name = ''
+            self.last_name = ''
             self.lang = ['hebrew']
 
             #taken from 'from' field.
@@ -22,12 +29,12 @@ class haver():
 
             #first sentence should include other info. the second needs to contain the phone number.
             info = entry['message'].split('.')
-            self.phone_number = extract_numbers(info[1])
+            self.phone_number = filter_phone_number(info[1])
 
             #extracting info from firts sentance.
             info = info[0].split(',')
             self.name = info[0].split(' ')[-1]
-            self.age = int(extract_numbers(info[1]))
+            self.age = int(filter_phone_number(info[1]))
             self.city = ' '.join(info[2].split(' ')[2:])[1:].lower()
             if self.city.islower():
                 self.city = self.city.split(' ')
@@ -45,39 +52,19 @@ class haver():
             self.relevant = False
             print('Post not relevant, dropped.')
 
-    '''
-    Printing Function:
-        This function will enable the function 'print' to print this object.
-    Arguments:
-        None.
-    Return:
-        A string with all the information needed to be displayed.
-    '''
+
     def __str__(self):
         return 'Name: ' + self.name + "   Age:" + str(self.age) + '   Location: ' + self.city + '   Job: ' + self.job + '.'
 
-'''
-Function:
-    This function will extract only the numbers from a string.
-Arguments:
-    string: a string. | type: str.
-Return:
-    String containing only numbers.
-'''
-def extract_numbers(string):
+
+def filter_phone_number( number):
     res = ''
-    for char in string:
+    for char in number:
         if char.isdigit():
             res += char
     return res
 
-'''
-Function:
-    This function will parse and construct 'haver' objects.
-Arguments:
-    curl: a json object containing Facebooks' response. | type: str.
-Return: list of new 'haver' objects. | type: [haver, ].
-'''
+
 def get_haverim_from_posts(curl):
     list_posts = json.loads(curl)
     list_haverim = []
@@ -97,9 +84,44 @@ def get_haverim_from_posts(curl):
     return list_haverim
 
 
-if __name__=='__main__':
+def getHaverimFromFacebook():
     curl = get_posts_curl()
     new_haverim = get_haverim_from_posts(curl)
-    if new_haverim != None:
-        for haver in new_haverim:
-            print(haver)
+    if not new_haverim is None:
+        return new_haverim
+    return None
+
+def insertHaverToDb(haver):
+    try:
+
+        sqlite_insert_query = """ INSERT INTO 'HAVER'('name', 'surname', 'email', 'phone', 'Age', 'Citi', 'street', 'building', 'LANGUAGES', 'Employement', 'Skills') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+
+        c, conn = startConnection()
+
+        # Convert data into tuple format
+        data_tuple = (haver.name, haver.last_name, "example@gmail.com", haver.phone_number, haver.age, haver.city, "", "", haver.lang, haver.job, "None")
+
+        c.execute(sqlite_insert_query, data_tuple)
+
+        conn.commit()
+        print("The data inserted successfully to the USERS table")
+
+    except:
+        print("Failed to insert data into sqlite table")
+    finally:
+        if conn:
+            conn.close()
+            print("the sqlite connection is closed")
+
+class FacebookManager(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        while True:
+            haverim = getHaverimFromFacebook()
+            if not haverim is None:
+                for haver in haverim:
+                    insertHaverToDb(haver)
+
+            time.sleep(60) #60 secondes between every check
