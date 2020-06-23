@@ -80,7 +80,7 @@ def get_db_data(username):
     try:
         with sqlite3.connect(DB_NAME) as con:
             cur = con.cursor()
-            cur.execute("""select * from SAVTAS where Name='{}'""".format(username))
+            cur.execute("""select * from SAVTA where Name='{}'""".format(username))
             data = cur.fetchone()
             return data[4], data[5]
 
