@@ -13,10 +13,12 @@ def recognizeSpeech():
         print("Google Speech Recognition thinks you said in English: - ")
         text = r.recognize_google(audio, language="en-US")
         print(text)
-        translator = Translator(service_urls=['translate.google.com', 'translate.google.co.il'])
-        translation = translator.translate(text, src='en',dest='he')
-        print(translation.origin, ' -> ', translation.text)
 
+        #translator = Translator(service_urls=['translate.google.com', 'translate.google.co.il'])
+        #translation = translator.translate(text, src='en',dest='he')
+        #print(translation.origin, ' -> ', translation.text)
+
+        return text
 
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
