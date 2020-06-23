@@ -12,7 +12,7 @@ Date: 28/04/2020
 
 #######################################
 LIST_WORDS = []
-DB_NAME = "savtot.sql"
+DB_NAME = "SAVTAS.db"
 #######################################
 
 # reads the words from the file
@@ -36,7 +36,8 @@ def indentify_word(msg):
             # if match was found, returning the correct type of help
             # option = fire:policeman
             # see file <words>
-            if word in option:
+            if len(word) > 2 and word in option:
+                print(option.split(":")[1])
                 return option.split(":")[1]
 
     return "general"
@@ -55,6 +56,7 @@ def clientMsgHandler(clientMsg):
     help_type = indentify_word(savtas_request)
 
     msgForClient = build_msg(savtas_name, help_type)  # building the json msg
+    print(msgForClient)
     haverInfo = getHaver(msgForClient["city"], msgForClient["language"], msgForClient["type"])
 
     if haverInfo is None:
@@ -68,7 +70,7 @@ def clientMsgHandler(clientMsg):
 
 def build_msg(username, help_type):
     msg = {}
-    msg["address"], msg["city"], msg["language"] = get_db_data(username)
+    msg["city"], msg["language"] = get_db_data(username)
     msg["username"] = username
     msg["type"] = help_type[:-1]  # removing the "\n"
     return msg
@@ -78,9 +80,9 @@ def get_db_data(username):
     try:
         with sqlite3.connect(DB_NAME) as con:
             cur = con.cursor()
-            cur.execute("""select * from Savta where Name='{}'""".format(username))
+            cur.execute("""select * from SAVTAS where Name='{}'""".format(username))
             data = cur.fetchone()
-            return data[5], data[6], data[8]
+            return data[4], data[5]
 
     except Exception as e:
         print("exception {}".format(e))
