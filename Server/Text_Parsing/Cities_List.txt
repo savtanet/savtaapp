@@ -1,0 +1,76 @@
+Acre
+Afula
+Arad
+Ariel
+Ashdod
+Ashkelon
+Baqa-Jatt
+Bat Yam
+Beersheba
+Beit She'an
+Beit Shemesh
+Beitar Illit
+Bnei Brak
+Dimona
+Eilat
+El'ad
+Giv'atayim
+Giv'at Shmuel
+Hadera
+Haifa
+Herzliya
+Hod HaSharon
+Holon
+Jerusalem
+Karmiel
+Kfar Qasim
+Kfar Saba
+Kriyat Ata
+Kriyat Bialik
+Kriyat Gat
+Kriyat Malakhi
+Kriyat Motzkin
+Kriyat Ono
+Kriyat Shmona
+Kriyat Yam
+Lod
+Ma'ale Adumim
+Ma'alot-Tarshiha
+Migdal HaEmek
+Modi'in Illit
+Modi'in-Maccabim-Re'ut
+Nahariya
+Nazareth
+Nazareth Illit
+Nesher
+Ness Ziona
+Netanya
+Netivot
+Ofakim
+Or Akiva
+Or Yehuda
+Petah Tikva
+Qalansawe
+Ra'anana
+Rahat
+Ramat Gan
+Ramat HaSharon
+Ramla
+Rehovot
+Rishon LeZion
+Rosh HaAyin
+Safed
+Sakhnin
+Sderot
+Shefa-'Amr
+Shfar'am
+Tamra
+Tayibe
+Tel Aviv
+Tiberias
+Tira
+Tirat Carmel
+Umn al-Fahm
+Yavne
+Yehud-Monosson
+Yokneam
