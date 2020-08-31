@@ -1,6 +1,7 @@
 from Clients.Connection import bind_to_port
 from Clients.Server_Class import server_thread
 from Facebook.Facebook_Server import facebook_crawler
+from Haverim_DB.DB_Handler import database_handler
 import time
 
 
@@ -9,10 +10,12 @@ def main():
     print('Binding to port. - main')
 
     try:
-        # 300 is 5 minutes.
-        crawler = facebook_crawler(60)
+        handler = database_handler(host='192.168.1.26', password='AnthonNaivelt123')
 
-        server = server_thread(socket)
+        # 300 is 5 minutes.
+        crawler = facebook_crawler(60, handler)
+
+        server = server_thread(socket, handler)
 
         time.sleep(10)
 

@@ -20,7 +20,7 @@ def parse_post_class_haver(text, cities=[], names=[]):
                     cities.append(city)
 
     if not names:
-        with open('Text_Parsing/Names_List', 'r') as f:
+        with open('Text_Parsing/Names_List.txt', 'r') as f:
             while True:
                 name = f.readline().replace('\n', '')
                 if name == '':
@@ -81,5 +81,26 @@ def parse_get_request(get_request):
         return None, None, None
 
 
-def parse_client_request(client_request):
-    pass
+def parse_request_words(client_request):
+    key_list = []
+    value_list = []
+
+    with open("Text_Parsing/Requests.txt") as file:
+        while True:
+            line = file.readline().replace('\n', '').split(':')
+            if line is not '':
+                key_list.append(line[0])
+                value_list.append(line[1])
+            else:
+                break
+
+    request_dict = dict(zip(key_list, value_list))
+    print(request_dict)
+
+    for word in client_request:
+        if word in request_dict.keys():
+            special_requirement = request_dict[word]
+        else:
+            special_requirement = None
+
+    return special_requirement

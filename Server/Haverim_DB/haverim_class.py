@@ -26,4 +26,8 @@ class haver_cert:
         return 'Name: ' + self.name + ' Location: ' + self.city + ' Job: ' + self.occupation + '. (Cert)'
 
     def to_tuple(self):
-        return self.name, self.city, self.phone, self.facebook_id, self.email, self.occupation, self.langs
+        languages = ""
+        for lang in self.langs:
+            languages = languages + lang + ','
+
+        return self.name, self.city, self.phone, self.facebook_id, self.email, self.occupation, languages[:-1]

@@ -3,9 +3,10 @@ from Clients.Client_Class import client_thread
 
 
 class server_thread(threading.Thread):
-    def __init__(self, server_socket):
+    def __init__(self, server_socket, db_handler):
         threading.Thread.__init__(self)
         self.server_socket = server_socket
+        self.handler = db_handler
         self.t = threading.Thread(target=self.execute, args=())
         self.t.daemon = True
         self.t.start()
@@ -19,7 +20,7 @@ class server_thread(threading.Thread):
                 client_socket, client_address = self.server_socket.accept()
                 print('Client accepted    ip:{}. - server'.format(client_address))
 
-                client_thread(client_socket, client_address)
+                client_thread(client_socket, self.handler)
                 print('Starting new client thread. - server')
 
             except KeyboardInterrupt:
