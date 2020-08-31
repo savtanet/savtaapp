@@ -60,7 +60,7 @@ class database_handler:
     def test(self, location, langs):
         params = [location]
         languages = ''
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE ('%',%s,'%'))"
+        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE '%%s%'"
 
         for lang in langs:
             languages = languages + lang + ','
