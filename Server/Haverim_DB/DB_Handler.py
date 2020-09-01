@@ -39,7 +39,7 @@ class database_handler:
         get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND occupation = %s AND langs LIKE %%s%"
 
         for lang in langs:
-            languages = languages + lang + ','
+            languages = languages + lang + '+'
         params.append(languages[:-1])
 
         self.cursor.execute(get_cert_formula, tuple(params))
@@ -51,19 +51,7 @@ class database_handler:
         get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE %%s%"
 
         for lang in langs:
-            languages = languages + lang + ','
-        params.append(languages[:-1])
-
-        self.cursor.execute(get_cert_formula, tuple(params))
-        return self.cursor.fetchall()
-
-    def test(self, location, langs):
-        params = [location]
-        languages = ''
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE '%%s%'"
-
-        for lang in langs:
-            languages = languages + lang + ','
+            languages = languages + lang + '+'
         params.append(languages[:-1])
 
         self.cursor.execute(get_cert_formula, tuple(params))
@@ -71,8 +59,3 @@ class database_handler:
 
     def commit(self):
         self.db.commit()
-
-    def test_two(self, location, langs):
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE %{}%".format(langs)
-        self.cursor.execute(get_cert_formula, (location, langs))
-        return self.cursor.fetchall()

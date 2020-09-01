@@ -28,6 +28,6 @@ class haver_cert:
     def to_tuple(self):
         languages = ""
         for lang in self.langs:
-            languages = languages + lang + ','
+            languages = languages + lang + '+'
 
         return self.name, self.city, self.phone, self.facebook_id, self.email, self.occupation, languages[:-1]

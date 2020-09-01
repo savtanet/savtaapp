@@ -2,6 +2,7 @@ import threading
 from Clients.Connection import send_to_client, receive_from_client
 from Text_Parsing.Parse_Text_Params import parse_get_request
 from Text_Parsing.Parse_Text_Params import parse_request_words
+from Text_Parsing.Parse_Text_Params import convert_haver_to_json
 
 
 class client_thread(threading.Thread):
@@ -24,11 +25,19 @@ class client_thread(threading.Thread):
         if request is not None and languages is not None and languages is not [] and location is not None:
             special_requirement = parse_request_words(request)
             if special_requirement is None:
-                haverim = self.handler.get_haverim_cert_where_location_langs(location, languages)
+                haver = self.handler.get_haverim_cert_where_location_langs(location, languages)
             else:
-                haverim = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
+                haver = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
+            try:
+                haver = haver[0]
+                print("Engine returned {} as the most suitable haver. - client".format(haver))
+                json_obj = convert_haver_to_json(haver)
+                send_to_client(json_obj, self.client_socket)
+                print("Client {} message sent successfully. - client".format(self.client_address))
 
-
+            except TypeError:
+                haver = None
+                print("No suitable haver was found. - client")
 
         else:
             print('Client {} has sent an invalid request. - client'.format(self.client_address))

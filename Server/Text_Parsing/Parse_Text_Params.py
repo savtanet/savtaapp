@@ -1,3 +1,4 @@
+import json
 from Haverim_DB.haverim_class import haver
 
 
@@ -95,7 +96,6 @@ def parse_request_words(client_request):
                 break
 
     request_dict = dict(zip(key_list, value_list))
-    print(request_dict)
 
     for word in client_request:
         if word in request_dict.keys():
@@ -104,3 +104,13 @@ def parse_request_words(client_request):
             special_requirement = None
 
     return special_requirement
+
+
+def convert_haver_to_json(suitable_haver):
+    json_haver = {
+        'Name': suitable_haver[0],
+        'Phone': suitable_haver[2],
+        'Occupation': suitable_haver[5],
+        'Languages': suitable_haver[6]
+    }
+    return json.dumps(json_haver)
