@@ -114,3 +114,7 @@ def convert_haver_to_json(suitable_haver):
         'Languages': suitable_haver[6]
     }
     return json.dumps(json_haver)
+
+
+def convert_error_to_json(msg):
+    return json.dumps(msg)

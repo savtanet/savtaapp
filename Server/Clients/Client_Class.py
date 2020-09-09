@@ -3,6 +3,7 @@ from Clients.Connection import send_to_client, receive_from_client
 from Text_Parsing.Parse_Text_Params import parse_get_request
 from Text_Parsing.Parse_Text_Params import parse_request_words
 from Text_Parsing.Parse_Text_Params import convert_haver_to_json
+from Text_Parsing.Parse_Text_Params import convert_error_to_json
 
 
 class client_thread(threading.Thread):
@@ -36,7 +37,8 @@ class client_thread(threading.Thread):
                 print("Client {} message sent successfully. - client".format(self.client_address))
 
             except TypeError:
-                haver = None
+                json_obj = {'Error': 'no suitable haver was found'}
+                send_to_client(convert_error_to_json(json_obj), self.client_socket)
                 print("No suitable haver was found. - client")
 
         else:

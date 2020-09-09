@@ -15,7 +15,11 @@ class database_handler:
         insert_haver_formula = "INSERT INTO haverim" \
                                " (name, location, phone, facebook_id)" \
                                " VALUES (%s, %s, %s, %s)"
-        self.cursor.execute(insert_haver_formula, haver_object.to_tuple())
+        try:
+            self.cursor.execute(insert_haver_formula, haver_object.to_tuple())
+        except mysql.connector.errors.IntegrityError:
+            print("Duplicate")
+            pass
 
     def add_haver_cert_to_db(self, haver_cert_object):
         insert_haver_cert_formula = "INSERT INTO haverim_cert" \
