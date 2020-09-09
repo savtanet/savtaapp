@@ -10,7 +10,7 @@ def main():
     print('Binding to port. - main')
 
     try:
-        handler = database_handler(host='192.168.1.26', password='AnthonNaivelt123')
+        handler = database_handler(host='localhost', password='AnthonNaivelt123')
 
         # 300 is 5 minutes.
         crawler = facebook_crawler(60, handler)
