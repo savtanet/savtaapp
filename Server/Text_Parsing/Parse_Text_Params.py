@@ -89,9 +89,12 @@ def parse_request_words(client_request):
     with open("Text_Parsing/Requests.txt") as file:
         while True:
             line = file.readline().replace('\n', '').split(':')
-            if line != '':
-                key_list.append(line[0])
-                value_list.append(line[1])
+            if line != ['']:
+                try:
+                    key_list.append(line[0])
+                    value_list.append(line[1])
+                except IndexError:
+                    print('-> '+ str(line) + ' THIS IS THE ERROR')
             else:
                 break
 

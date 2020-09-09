@@ -20,11 +20,11 @@ class server_thread(threading.Thread):
                 client_socket, client_address = self.server_socket.accept()
                 print('Client accepted    ip:{}. - server'.format(client_address))
 
-                client_thread(client_socket, self.handler)
+                client_thread(client_socket=client_socket, client_address=client_address, db_handler=self.handler)
                 print('Starting new client thread. - server')
 
             except KeyboardInterrupt:
                 raise Exception(KeyboardInterrupt)
 
-            except Exception as e:
-                raise Exception(e)
+            '''except Exception as e:
+                raise Exception(e)'''

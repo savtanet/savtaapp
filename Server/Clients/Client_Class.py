@@ -30,13 +30,16 @@ class client_thread(threading.Thread):
             else:
                 haver = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
             try:
-                haver = haver[0]
-                print("Engine returned {} as the most suitable haver. - client".format(haver))
-                json_obj = convert_haver_to_json(haver)
-                send_to_client(json_obj, self.client_socket)
-                print("Client {} message sent successfully. - client".format(self.client_address))
+                if haver is []:
+                    raise TypeError
+                else:
+                    haver = haver[0]
+                    print("Engine returned {} as the most suitable haver. - client".format(haver))
+                    json_obj = convert_haver_to_json(haver)
+                    send_to_client(json_obj, self.client_socket)
+                    print("Client {} message sent successfully. - client".format(self.client_address))
 
-            except TypeError:
+            except IndexError:
                 json_obj = {'Error': 'no suitable haver was found'}
                 send_to_client(convert_error_to_json(json_obj), self.client_socket)
                 print("No suitable haver was found. - client")
