@@ -21,10 +21,12 @@ class client_thread(threading.Thread):
 
         # Receiving data from the client
         client_http_get_request = receive_from_client(self.client_socket)
+        print('Clients request: ', client_http_get_request)
         request, languages, location = parse_get_request(client_http_get_request)
 
         if request is not None and languages is not None and languages is not [] and location is not None:
             special_requirement = parse_request_words(request)
+            print('Clients requirements: {} + {} + {}. - client'.format(location, languages, special_requirement))
             if special_requirement is None:
                 haver = self.handler.get_haverim_cert_where_location_langs(location, languages)
             else:
