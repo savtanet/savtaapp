@@ -23,6 +23,8 @@ def get_posts_curl(nodes=['posts'], fields=[['message', 'from']], token_file='Fa
     url = parse_facebook_url_request(nodes, fields, token)
     url = convert_to_curl(url)
 
+    print("---URL---: " + url)
+
     # curl session and settings.
     curl.setopt(curl.CAINFO, certifi.where())
     curl.setopt(curl.URL, url)
