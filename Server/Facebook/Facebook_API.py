@@ -56,7 +56,7 @@ def parse_facebook_url_request(nodes, fields, token, version=7.0):
         token : valid token from facebook. | type: str
         version: version of the Graph API. | type: float
     Return:
-        request, not valid for curl request, needs convercetion. | type: str
+        request, not valid for curl request, needs convertion. | type: str
     """
     request = 'https://graph.facebook.com/v' + str(version) + '/me?fields='
     # constructing the request using the nodes and fields.
@@ -77,7 +77,7 @@ def get_token_from_file(file_name):
     Function:
         This function will get the access token from a given file.
     Args:
-        file_name: The path to the file (reletive or absulot). | type: str.
+        file_name: The path to the file. | type: str.
     Return:
         The access token. | type: str.
     """

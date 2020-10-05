@@ -48,6 +48,7 @@ class client_thread(threading.Thread):
 
         else:
             print('Client {} has sent an invalid request. - client'.format(self.client_address))
+            print('Client {}: request: {}    languages: {}    location: {}    '.format(self.client_address, request, languages, location))
 
         print("Closing client's {} socket. - client".format(self.client_address))
 

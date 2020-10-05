@@ -12,6 +12,7 @@ def get_haverim_from_facebook(last_post):
     Output: If the function found new haverim, returns a list of 'haver' object, else, none.
     """
     curl = get_posts_curl()
+    print(curl)
     new_haverim, last_post = get_haverim_from_posts(curl, last_post)
     if new_haverim is None or new_haverim is []:
         return None, last_post
