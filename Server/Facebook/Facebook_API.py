@@ -1,6 +1,7 @@
 import pycurl
 import certifi
 from io import BytesIO
+from urllib.parse import unquote
 
 
 def get_posts_curl(nodes=['posts'], fields=[['message', 'from']], token_file='Facebook/token.txt'):
@@ -22,6 +23,7 @@ def get_posts_curl(nodes=['posts'], fields=[['message', 'from']], token_file='Fa
     # constructing request.
     url = parse_facebook_url_request(nodes, fields, token)
     url = convert_to_curl(url)
+    url = unquote(url)
 
     print("---URL---: " + url)
 
