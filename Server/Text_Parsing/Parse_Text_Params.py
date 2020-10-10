@@ -78,6 +78,7 @@ def parse_get_request(get_request):
         lines = get_request.split('\n')
         for line in lines:
             if "GET" in line:
+                print("Found GET request")
                 break
 
         # params: [junk, request, langs, location + junk]
@@ -100,10 +101,16 @@ def parse_get_request(get_request):
 
         return request, langs, location
 
-    except IndexError:
+    except IndexError as e:
+        print("-------------------------------")
+        print(e)
+        print("-------------------------------")
         return None, None, None
 
-    except ValueError:
+    except ValueError as e:
+        print("-------------------------------")
+        print(e)
+        print("-------------------------------")
         return None, None, None
 
 
