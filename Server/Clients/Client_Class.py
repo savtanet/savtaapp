@@ -34,7 +34,15 @@ class client_thread(threading.Thread):
                 haver = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
             try:
                 if haver is []:
-                    raise TypeError
+                    # DELETE ALL BEFORE MOVING IN PRODUCTION AND UN_COMMENT RAISE STATEMENT!!!
+                    # raise TypeError
+                    haver = self.handler.get_fake()
+
+                    haver = haver[0]
+                    print("Engine returned {} as the most suitable haver. - client".format(haver))
+                    json_obj = convert_haver_to_json(haver)
+                    send_to_client(json_obj, self.client_socket)
+                    print("Client {} message sent successfully. - client".format(self.client_address))
                 else:
                     haver = haver[0]
                     print("Engine returned {} as the most suitable haver. - client".format(haver))

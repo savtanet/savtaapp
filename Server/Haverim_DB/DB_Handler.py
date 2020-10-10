@@ -63,3 +63,8 @@ class database_handler:
 
     def commit(self):
         self.db.commit()
+
+    def get_fake(self):
+        formula = "SELECT * FROM haverim_cert"
+        self.cursor.execute(formula)
+        return self.cursor.fetchall()
