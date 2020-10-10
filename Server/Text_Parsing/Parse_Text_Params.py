@@ -103,6 +103,9 @@ def parse_get_request(get_request):
     except IndexError:
         return None, None, None
 
+    except ValueError:
+        return None, None, None
+
 
 def parse_request_words(client_request):
     key_list = []
