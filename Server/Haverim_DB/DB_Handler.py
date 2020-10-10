@@ -52,7 +52,7 @@ class database_handler:
     def get_haverim_cert_where_location_langs(self, location, langs):
         params = [location]
         languages = ''
-        get_cert_formula = 'SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE CONCAT(","%",%s,"%",")'
+        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE CONCAT('%',%s,'%')"
 
         for lang in langs:
             languages = languages + lang + '+'
@@ -63,13 +63,3 @@ class database_handler:
 
     def commit(self):
         self.db.commit()
-
-
-def main():
-    handler = database_handler(host='localhost', password='AnthonNaivelt123')
-    res = handler.get_haverim_cert_where_location_langs(location="Ashdod", langs="he")
-    print("Got in return: " + str(res))
-
-
-if __name__ == '__main__':
-    main()
