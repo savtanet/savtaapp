@@ -68,7 +68,7 @@ class database_handler:
 def main():
     handler = database_handler(host='localhost', password='AnthonNaivelt123')
     res = handler.get_haverim_cert_where_location_langs(location="Ashdod", langs="he")
-    print("Got in return: " + res)
+    print("Got in return: " + str(res))
 
 
 if __name__ == '__main__':
