@@ -75,8 +75,26 @@ def find_number_substrings(text):
 
 def parse_get_request(get_request):
     try:
-        params = list(filter(None, get_request.split('0')[1].split('/')))
-        return params[0], params[1:-1:1], params[-1]
+        lines = get_request.split('\n')
+        for line in lines:
+            if "GET" in line:
+                break
+
+        # params: [junk, request, langs, location + junk]
+        params = line.split('/')
+        # removing headings: [request, langs, location + junk]
+        params = params[1:-1]
+
+        request, langs, location = params
+
+        # clearing location param
+        location = location.split(" ")
+        location = location[0]
+
+        # clearing request:
+        request = request.replace("+", " ")
+
+        return request, langs, location
 
     except IndexError:
         return None, None, None
@@ -94,7 +112,7 @@ def parse_request_words(client_request):
                     key_list.append(line[0])
                     value_list.append(line[1])
                 except IndexError:
-                    print('-> '+ str(line) + ' THIS IS THE ERROR')
+                    print('-> ' + str(line) + ' THIS IS THE ERROR')
             else:
                 break
 
