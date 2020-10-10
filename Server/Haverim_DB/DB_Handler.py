@@ -52,7 +52,7 @@ class database_handler:
     def get_haverim_cert_where_location_langs(self, location, langs):
         params = [location]
         languages = ''
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '%s' AND langs LIKE CONCAT(','%',%s,'%',')"
+        get_cert_formula = 'SELECT * FROM haverim_cert WHERE location = %s AND langs LIKE CONCAT(","%",%s,"%",")'
 
         for lang in langs:
             languages = languages + lang + '+'
