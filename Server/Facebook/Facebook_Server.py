@@ -23,9 +23,9 @@ class facebook_crawler(threading.Thread):
                 last_check = time.time()
 
                 try:
-                    print('Trying to parse posts from facebook. - facebook.')
+                    # print('Trying to parse posts from facebook. - facebook.')
                     new_haverim, last_post = get_haverim_from_facebook(last_post)
-                    print('Done. - facebook')
+                    # print('Done. - facebook')
 
                 except ValueError:
                     pass

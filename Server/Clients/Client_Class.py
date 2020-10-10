@@ -17,7 +17,7 @@ class client_thread(threading.Thread):
         self.t.start()
 
     def execute(self):
-        print('New client thread started successfully. - client {}'.format(self.client_address))
+        # print('New client thread started successfully. - client {}'.format(self.client_address))
 
         # Receiving data from the client
         client_http_get_request = receive_from_client(self.client_socket)
@@ -50,7 +50,7 @@ class client_thread(threading.Thread):
             print('Client {} has sent an invalid request. - client'.format(self.client_address))
             print('Client {}: request: {}    languages: {}    location: {}    '.format(self.client_address, request, languages, location))
 
-        print("Closing client's {} socket. - client".format(self.client_address))
+        # print("Closing client's {} socket. - client".format(self.client_address))
 
         # Closing the socket
         self.client_socket.close()

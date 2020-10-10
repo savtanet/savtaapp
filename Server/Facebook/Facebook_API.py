@@ -25,8 +25,6 @@ def get_posts_curl(nodes=['posts'], fields=[['message', 'from']], token_file='Fa
     url = convert_to_curl(url)
     url = unquote(url)
 
-    print("---URL---: " + url)
-
     # curl session and settings.
     curl.setopt(curl.CAINFO, certifi.where())
     curl.setopt(curl.URL, url)

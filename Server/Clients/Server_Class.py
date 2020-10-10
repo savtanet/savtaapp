@@ -15,13 +15,13 @@ class server_thread(threading.Thread):
         while True:
             print('Server thread started successfully. - server')
             try:
-                print('Server thread is now listening. - server')
+                # print('Server thread is now listening. - server')
                 self.server_socket.listen()
                 client_socket, client_address = self.server_socket.accept()
-                print('Client accepted    ip:{}. - server'.format(client_address))
+                # print('Client accepted    ip:{}. - server'.format(client_address))
 
                 client_thread(client_socket=client_socket, client_address=client_address, db_handler=self.handler)
-                print('Starting new client thread. - server')
+                # print('Starting new client thread. - server')
 
             except KeyboardInterrupt:
                 raise Exception(KeyboardInterrupt)
