@@ -85,6 +85,10 @@ def parse_get_request(get_request):
         # removing headings: [request, langs, location + junk]
         params = params[1:-1]
 
+        print("-------------------------------")
+        print(params)
+        print("-------------------------------")
+
         request, langs, location = params
 
         # clearing location param
