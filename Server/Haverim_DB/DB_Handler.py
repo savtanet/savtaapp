@@ -63,3 +63,13 @@ class database_handler:
 
     def commit(self):
         self.db.commit()
+
+
+def main():
+    handler = database_handler(host='localhost', password='AnthonNaivelt123')
+    res = handler.get_haverim_cert_where_location_langs(location="Ashdod", langs="he")
+    print(res)
+
+
+if __name__ == '__main__':
+    main()

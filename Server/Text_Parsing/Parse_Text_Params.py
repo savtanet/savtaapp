@@ -78,17 +78,12 @@ def parse_get_request(get_request):
         lines = get_request.split('\n')
         for line in lines:
             if "GET" in line:
-                print("Found GET request")
                 break
 
         # params: [junk, request, langs, location + junk]
         params = line.split('/')
         # removing headings: [request, langs, location + junk]
         params = params[1:-1]
-
-        print("-------------------------------")
-        print(params)
-        print("-------------------------------")
 
         request, langs, location = params
 
@@ -101,16 +96,10 @@ def parse_get_request(get_request):
 
         return request, langs, location
 
-    except IndexError as e:
-        print("-------------------------------")
-        print(e)
-        print("-------------------------------")
+    except IndexError:
         return None, None, None
 
-    except ValueError as e:
-        print("-------------------------------")
-        print(e)
-        print("-------------------------------")
+    except ValueError:
         return None, None, None
 
 
