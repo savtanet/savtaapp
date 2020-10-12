@@ -43,6 +43,7 @@ class database_handler:
             languages = languages + lang + '+'
         languages = languages[:-1]
 
+        print("Query for: location: {}, occupation: {}, language: {}. - query".format(location, occupation, languages))
         get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '{}' AND occupation = '{}' AND langs LIKE '%{}%'".format(location, occupation, languages)
 
         self.cursor.execute(get_cert_formula)
@@ -54,6 +55,7 @@ class database_handler:
             languages = languages + lang + '+'
         languages = languages[:-1]
 
+        print("Query for: location: {}, language: {}. - query".format(location, languages))
         get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '{}' AND langs LIKE '%{}%'".format(location, languages)
 
         self.cursor.execute(get_cert_formula)
