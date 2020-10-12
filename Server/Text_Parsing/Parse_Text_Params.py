@@ -126,7 +126,10 @@ def parse_request_words(client_request):
 
     for word in client_request:
         if word in request_dict.keys():
+            print("-----" + word + "------")
             special_requirement = request_dict[word]
+            if special_requirement is "general":
+                special_requirement = None
             break
         else:
             special_requirement = None
