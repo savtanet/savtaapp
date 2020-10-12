@@ -104,6 +104,9 @@ def parse_get_request(get_request):
 
 
 def parse_request_words(client_request):
+    print("_______")
+    print(client_request)
+    print("_______")
     key_list = []
     value_list = []
 
@@ -124,6 +127,7 @@ def parse_request_words(client_request):
     for word in client_request:
         if word in request_dict.keys():
             special_requirement = request_dict[word]
+            break
         else:
             special_requirement = None
 
@@ -142,3 +146,12 @@ def convert_haver_to_json(suitable_haver):
 
 def convert_error_to_json(msg):
     return json.dumps(msg)
+
+
+def main():
+    special = parse_request_words("i need help to find remote")
+    print(special)
+
+
+if __name__ == '__main__':
+    main()
