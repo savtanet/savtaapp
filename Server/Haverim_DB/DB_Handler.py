@@ -38,20 +38,18 @@ class database_handler:
         return self.cursor.fetchall()
 
     def get_haverim_cert_where_location_occupation_langs(self, location, occupation, langs):
-        params = [location, occupation]
         languages = ""
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = %s AND occupation = %s AND langs LIKE CONCAT('%',%s,'%')"
-
         for lang in langs:
             languages = languages + lang + '+'
-        params.append(languages[:-1])
+        languages = languages[:-1]
 
-        self.cursor.execute(get_cert_formula, tuple(params))
+        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '{}' AND occupation = '{}' AND langs LIKE '%{}%'".format(location, occupation, languages)
+
+        self.cursor.execute(get_cert_formula)
         return self.cursor.fetchall()
 
     def get_haverim_cert_where_location_langs(self, location, langs):
         languages = ''
-
         for lang in langs:
             languages = languages + lang + '+'
         languages = languages[:-1]
@@ -76,6 +74,10 @@ def main():
     print(haverim)
     if haverim is []:
         print("Yeah...")
+    haverim = handler.get_haverim_cert_where_location_occupation_langs('Ashdod', 'student', ['he'])
+    print(haverim)
+    if haverim is []:
+        print("Yeah2...")
     pass
 
 

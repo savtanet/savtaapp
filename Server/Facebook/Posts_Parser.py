@@ -26,14 +26,14 @@ def get_haverim_from_posts(curl, last_post):
     newest_post_in_batch = True
 
     try:
-        # print('Trying to un-load posts from facebook. - parser')
+        print('Trying to un-load posts from facebook. - parser')
         list_posts = list_posts['posts']['data']
 
     except KeyError:
-        # print('Un-loading fail. Error, token expired. - parser')
+        print('Un-loading fail. Error, token expired. - parser')
         raise ValueError('Error, token expired.')
 
-    # print('Last post is: {}    Newest post is: {}. - parser'.format(last_post, list_posts[0]['id']))
+    print('Last post is: {}    Newest post is: {}. - parser'.format(last_post, list_posts[0]['id']))
     for post in list_posts:
         if post['id'] == last_post:
             print('No new posts.')
