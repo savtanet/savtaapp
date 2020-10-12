@@ -94,6 +94,9 @@ def parse_get_request(get_request):
         # clearing request:
         request = request.replace("+", " ")
 
+        # parsing languages:
+        langs = langs.split("+")
+
         return request, langs, location
 
     except IndexError:
@@ -124,7 +127,7 @@ def parse_request_words(client_request):
     request_dict = dict(zip(key_list, value_list))
 
     print("Looking for match. - parser")
-    for word in client_request:
+    for word in client_request.split(" "):
         print(word + " skipped. - parser")
         if word in request_dict.keys():
             print("-----" + word + "------")

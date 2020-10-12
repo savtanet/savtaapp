@@ -25,10 +25,10 @@ class client_thread(threading.Thread):
             special_requirement = parse_request_words(request)
             print('Clients valid requirements: {} + {} + {}. - client'.format(location, languages, special_requirement))
             if special_requirement is None:
-                print("Client requires special assistance. - client")
+                print("No special assistance required. - client")
                 haver = self.handler.get_haverim_cert_where_location_langs(location, languages)
             else:
-                print("No special assistance required. - client")
+                print("Client requires special assistance. - client")
                 haver = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
             try:
                 if haver is []:
