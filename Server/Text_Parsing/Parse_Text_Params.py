@@ -104,12 +104,10 @@ def parse_get_request(get_request):
 
 
 def parse_request_words(client_request):
-    print("_______")
-    print(client_request)
-    print("_______")
     key_list = []
     value_list = []
 
+    print("Opening text file. - parser")
     with open("Text_Parsing/Requests.txt") as file:
         while True:
             line = file.readline().replace('\n', '').split(':')
@@ -121,10 +119,13 @@ def parse_request_words(client_request):
                     print('-> ' + str(line) + ' THIS IS THE ERROR')
             else:
                 break
+    print("Read text file. - parser")
 
     request_dict = dict(zip(key_list, value_list))
 
+    print("Looking for match. - parser")
     for word in client_request:
+        print(word + " skipped. - parser")
         if word in request_dict.keys():
             print("-----" + word + "------")
             special_requirement = request_dict[word]
@@ -134,6 +135,8 @@ def parse_request_words(client_request):
         else:
             special_requirement = None
 
+    print("Special req: {}. - parser".format(special_requirement))
+    print("Type: {}. - parser".format(type(special_requirement)))
     return special_requirement
 
 

@@ -38,6 +38,7 @@ class database_handler:
         return self.cursor.fetchall()
 
     def get_haverim_cert_where_location_occupation_langs(self, location, occupation, langs):
+        print("location: {}    occupation: {}    languages: {}. - query".format(location, occupation, langs))
         languages = ""
         for lang in langs:
             languages = languages + lang + '+'
@@ -49,6 +50,7 @@ class database_handler:
         return self.cursor.fetchall()
 
     def get_haverim_cert_where_location_langs(self, location, langs):
+        print("location: {}    languages: {}. - query".format(location, langs))
         languages = ''
         for lang in langs:
             languages = languages + lang + '+'

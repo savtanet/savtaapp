@@ -19,7 +19,6 @@ class client_thread(threading.Thread):
     def execute(self):
         # Receiving data from the client
         client_http_get_request = receive_from_client(self.client_socket)
-        print('Clients request: ', client_http_get_request)
         request, languages, location = parse_get_request(client_http_get_request)
 
         if request is not None and languages is not None and languages is not [] and location is not None:

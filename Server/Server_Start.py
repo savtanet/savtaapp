@@ -2,7 +2,7 @@ from Clients.Connection import bind_to_port
 from Clients.Server_Class import server_thread
 from Facebook.Facebook_Server import facebook_crawler
 from Haverim_DB.DB_Handler import database_handler
-import time
+#import time
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
 
         server = server_thread(socket, handler)
 
-        time.sleep(10)
+        # time.sleep(10)
 
         # waiting for the server thread to join the main thread.
         print('Main thread is waiting for server thread to join. - main')
