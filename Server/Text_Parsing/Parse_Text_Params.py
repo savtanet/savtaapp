@@ -151,7 +151,12 @@ def convert_error_to_json(msg):
 
 
 def add_html_headers(msg):
-    return "HTTP/1.1 200 OK\r\n" + "Content-Type: application/json; charset-utf-8\r\n" + "\r\n" + msg + "\r\n\r\n"
+    res = "HTTP/1.1 200 OK\r\n"
+    res += "Content-Type: application/json; charset-utf-8\r\n"
+    res += "Connection: Closed\r\n"
+    res += "\r\n"
+    res += msg + "\r\n"
+    res += "\r\n"
 
 
 def main():
