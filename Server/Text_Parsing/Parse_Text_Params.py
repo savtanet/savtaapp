@@ -150,6 +150,10 @@ def convert_error_to_json(msg):
     return json.dumps(msg)
 
 
+def add_html_headers(msg):
+    return "HTTP/1.1 200 OK\r\n" + "Content-Type: application/json; charset-utf-8\r\n" + "\r\n" + msg + "\r\n\r\n"
+
+
 def main():
     special = parse_request_words("i need help to find remote")
     print(special)

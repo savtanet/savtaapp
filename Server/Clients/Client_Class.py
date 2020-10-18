@@ -4,6 +4,7 @@ from Text_Parsing.Parse_Text_Params import parse_get_request
 from Text_Parsing.Parse_Text_Params import parse_request_words
 from Text_Parsing.Parse_Text_Params import convert_haver_to_json
 from Text_Parsing.Parse_Text_Params import convert_error_to_json
+from Text_Parsing.Parse_Text_Params import add_html_headers
 
 
 class client_thread(threading.Thread):
@@ -37,7 +38,8 @@ class client_thread(threading.Thread):
                     haver = haver[0]
                     print("Engine returned {} as the most suitable haver. - client".format(haver))
                     json_obj = convert_haver_to_json(haver)
-                    send_to_client(json_obj, self.client_socket)
+                    html_response = add_html_headers(json_obj)
+                    send_to_client(html_response, self.client_socket)
 
             except IndexError:
                 json_obj = {'Error': 'no suitable haver was found'}
