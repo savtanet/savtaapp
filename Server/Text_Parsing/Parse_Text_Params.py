@@ -157,6 +157,7 @@ def add_html_headers(msg):
     res += "\r\n"
     res += msg + "\r\n"
     res += "\r\n"
+    return res
 
 
 def main():
