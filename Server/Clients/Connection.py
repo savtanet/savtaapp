@@ -1,6 +1,5 @@
 import socket
 
-
 def bind_to_port(port):
     try:
         # Create a TCP/IP socket
@@ -17,7 +16,11 @@ def bind_to_port(port):
 
 
 def receive_from_client(client_soc):
-    return client_soc.recv(1024).decode()
+    try:
+        return client_soc.recv(1024).decode()
+    except Exception as e:
+        print("Exception: " + str(e))
+        return None
 
 
 def send_to_client(msg, client_soc):
