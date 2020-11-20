@@ -2,7 +2,6 @@ from Clients.Connection import bind_to_port
 from Clients.Server_Class import server_thread
 from Facebook.Facebook_Server import facebook_crawler
 from Haverim_DB.DB_Handler import database_handler
-#import time
 
 
 def main():
@@ -25,16 +24,13 @@ def main():
         server.t.join()
 
     except KeyboardInterrupt:
-        socket.close()
         print('Ctrl + C was pressed.')
-        return
 
     except Exception as e:
-        socket.close()
         print('Program Terminated Unexpectedly: ' + str(e))
-        return
 
     socket.close()
+    return 
 
 
 if __name__ == '__main__':
