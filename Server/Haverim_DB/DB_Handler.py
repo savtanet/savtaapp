@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-class database_handler:
+class DatabaseHandler:
     def __init__(self, password=None, host='localhost', user='AnthonGar', database='development'):
         if password is None:
             password = input("Please enter your MySQL user password: ")
@@ -71,7 +71,7 @@ class database_handler:
 
 
 def main():
-    handler = database_handler(host='localhost', password='AnthonNaivelt123')
+    handler = DatabaseHandler(host='localhost', password='AnthonNaivelt123')
     haverim = handler.get_haverim_cert_where_location_langs('Ashdod', ['he'])
     print(haverim)
     if haverim is []:

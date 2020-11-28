@@ -1,8 +1,8 @@
 import threading
-from Clients.Client_Class import client_thread
+from Clients.Client_Class import ClientThread
 
 
-class server_thread(threading.Thread):
+class ServerThread(threading.Thread):
     def __init__(self, server_socket, db_handler):
         threading.Thread.__init__(self)
         self.server_socket = server_socket
@@ -12,19 +12,17 @@ class server_thread(threading.Thread):
         self.t.start()
 
     def execute(self):
+        clients = []
+
         while True:
-            print('Server thread started successfully. - server')
             try:
-                # print('Server thread is now listening. - server')
+                print('Server thread is now listening. - server')
                 self.server_socket.listen()
                 client_socket, client_address = self.server_socket.accept()
-                # print('Client accepted    ip:{}. - server'.format(client_address))
 
-                client_thread(client_socket=client_socket, client_address=client_address, db_handler=self.handler)
-                # print('Starting new client thread. - server')
+                clients.append(ClientThread(client_socket=client_socket,
+                                            client_address=client_address,
+                                            db_handler=self.handler))
 
             except KeyboardInterrupt:
                 raise Exception(KeyboardInterrupt)
-
-            '''except Exception as e:
-                raise Exception(e)'''

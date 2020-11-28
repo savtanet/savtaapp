@@ -8,7 +8,7 @@ from Text_Parsing.Parse_Text_Params import parse_get_request
 from Text_Parsing.Parse_Text_Params import parse_request_words
 
 
-class client_thread(threading.Thread):
+class ClientThread(threading.Thread):
     def __init__(self, client_socket, client_address, db_handler):
         threading.Thread.__init__(self)
         self.client_address = client_address

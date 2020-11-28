@@ -3,7 +3,7 @@ import time
 from Facebook.Posts_Parser import get_haverim_from_facebook
 
 
-class facebook_crawler(threading.Thread):
+class FacebookCrawler(threading.Thread):
     def __init__(self, time_between_checks, db_handler):
         threading.Thread.__init__(self)
         self.time = time_between_checks
@@ -16,16 +16,14 @@ class facebook_crawler(threading.Thread):
         print('Facebook thread started successfully. - facebook')
         last_check = time.time()
         new_haverim = None
-        last_post = ''
+        last_post_id = ''
 
         while True:
             if time.time() - last_check > self.time:
                 last_check = time.time()
 
                 try:
-                    # print('Trying to parse posts from facebook. - facebook.')
-                    new_haverim, last_post = get_haverim_from_facebook(last_post)
-                    # print('Done. - facebook')
+                    new_haverim, last_post_id = get_haverim_from_facebook(last_post_id)
 
                 except ValueError:
                     pass

@@ -1,19 +1,26 @@
 from facebook_scraper import get_posts
+import threading
 
 
-def get_page_post_generator(url, number_of_pages=1, credentials=("mysavta.test1@gmail.com", "TempPassword123")):
-    return get_posts(url, pages=number_of_pages, credentials=credentials)
+class GroupCrawler(threading.Thread):
+    def __init__(self, group, db_handler):
+        threading.Thread.__init__(self)
+        self._handler = db_handler
+        self.group = group
+        self.t = threading.Thread(target=self.execute, args=())
+        self.t.daemon = True
+        self.t.start()
+
+    def execute(self):
+        credentials = ("mysavta.test1@gmail.com", "TempPassword123")
+
+        for post in get_posts(group=self.group, pages=1, credentials=credentials):
+            pass
 
 
-def get_group_post_generator(group, number_of_pages=1, credentials=("mysavta.test1@gmail.com", "TempPassword123")):
-    return get_posts(group=group, pages=number_of_pages, credentials=credentials)
+def main():
+    print("This is used for testing.")
 
 
-# Doesn't work for users.
-def get_user_post_generator(user_id, number_of_pages=1, credentials=("mysavta.test1@gmail.com", "TempPassword123")):
-    return get_posts(user_id, pages=number_of_pages, credentials=credentials)
-
-
-gen = get_group_post_generator("Israel.Volunteering", number_of_pages=1)
-for post in gen:
-    print(post['user_id'])
+if __name__ == '__main__':
+    main()
