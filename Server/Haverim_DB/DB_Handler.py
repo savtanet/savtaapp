@@ -44,7 +44,8 @@ class DatabaseHandler:
         languages = languages[:-1]
 
         print("Query for: location: {}, occupation: {}, language: {}. - query".format(location, occupation, languages))
-        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '{}' AND occupation = '{}' AND langs LIKE '%{}%'".format(location, occupation, languages)
+        get_cert_formula = "SELECT * FROM haverim_cert WHERE location = '{}' AND occupation = '{}' AND langs LIKE '%{" \
+                           "}%'".format(location, occupation, languages)
 
         self.cursor.execute(get_cert_formula)
         return self.cursor.fetchall()

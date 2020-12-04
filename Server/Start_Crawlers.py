@@ -15,7 +15,6 @@ def main():
 
     for thread in thread_list:
         thread.t.join()
-        thread_list.remove(thread)
 
 
 if __name__ == '__main__':

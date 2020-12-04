@@ -1,5 +1,6 @@
-from facebook_scraper import get_posts
 import threading
+from facebook_scraper import get_posts
+from translate import Translator
 
 
 class GroupCrawler(threading.Thread):
@@ -7,6 +8,7 @@ class GroupCrawler(threading.Thread):
         threading.Thread.__init__(self)
         self._handler = db_handler
         self.group = group
+        self.translator = Translator(to_lang='en')
         self.t = threading.Thread(target=self.execute, args=())
         self.t.daemon = True
         self.t.start()

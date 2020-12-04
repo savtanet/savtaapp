@@ -1,4 +1,3 @@
-import nltk
 import gensim
 import string
 from nltk.tokenize import word_tokenize
@@ -9,13 +8,19 @@ from gensim.models import Word2Vec, KeyedVectors
 from collections import Counter
 
 # Downloads for nltk:
+"""
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
+"""
 
 # Word2vec related:
 MODEL = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True, limit=100000)
-CLUSTER = [x[0] for x in MODEL.most_similar_cosmul("volunteer", topn=120)]
+CLUSTER = [x[0] for x in MODEL.most_similar(positive=["volunteer", "help", "contribution"],
+                                            negative=["hate", "stupid", "annoying", "racism"],
+                                            topn=125)]
+
+print("The cluster: ", CLUSTER)
 
 # Topic identification related:
 STOPWORDS = set(stopwords.words('english'))
@@ -26,10 +31,12 @@ LEMMA = WordNetLemmatizer()
 def clean(document):
     """
         clean: This function cleans a string (multiple words) and returns it, preserving the order.
+        This is an internal function, it is not necessary for BOW operations in this document.
     """
     stopwords_removal = " ".join([i for i in document.lower().split() if i not in STOPWORDS])
     punctuation_removal = ''.join(ch for ch in stopwords_removal if ch not in EXCLUDE)
-    normalized = " ".join(LEMMA.lemmatize(word) for word in punctuation_removal.split())
+    numeric_removal = " ".join([i for i in punctuation_removal.split() if i.isalpha()])
+    normalized = " ".join(LEMMA.lemmatize(word) for word in numeric_removal.split())
     return normalized
 
 
@@ -57,6 +64,23 @@ def make_bag_of_words(document):
 
 
 def calculate_bow_relation_to_cluster(bag_of_words):
+    """
+        calculate_bow_relation_to_cluster: This function will calculate the resemblance of the BOW to the word cluster.
+    """
+    total_score = 0
+    valid_word_count = 1
+    for word_from_bag, occurrences in bag_of_words.items():
+        if word_from_bag in MODEL:
+            for word_from_cluster in CLUSTER:
+                current_iteration_score = MODEL.similarity(word_from_bag, word_from_cluster)
+                total_score = total_score + current_iteration_score
+                # print("testing {} with {} = {}".format(word_from_bag, word_from_cluster, current_iteration_score))
+            valid_word_count = valid_word_count + 1
+    if valid_word_count != 0:
+        total_score = total_score / valid_word_count
+    else:
+        total_score = 0
+    print(total_score)
     pass
 
 
@@ -66,9 +90,31 @@ def main():
     """
     test = ["Avengers: Infinity War was a 2018 American superhero film based on the Marvel Comics superhero team the " 
             "Avengers. It is the 19th film in the Marvel Cinematic Universe (MCU). The running time of the movie was "
-            "149 minutes and the box office collection was around 2 billion dollars. (Source: Wikipedia) "]
+            "149 minutes and the box office collection was around 2 billion dollars. (Source: Wikipedia) ",
+            "Volunteering allows you to connect to your community and make it a better place. ... And volunteering is "
+            "a two-way street: It can benefit you and your family as much as the cause you choose to help. Dedicating "
+            "your time as a volunteer helps you make new friends, expand your network, and boost your social skills.",
+            "One advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter "
+            "thoughts property she met way. Companions shy had solicitude favourable own.",
+            "I would really like to volunteer at a foster care house",
+            "I really hate annoying first graders that always ask stupid questions all the time for no reason",
+            "Hi dear volunteers, I have access to a large database designed to gather reporters who are looking for "
+            "items and I would be happy to help - are there volunteers and entrepreneurs here who are interested in "
+            "exposure and would like to tell their story or their venture / volunteering platform between stories and "
+            "reporters from many fields?"]
     bow = make_bag_of_words(test[0])
-    print("After cleaning: " + str(bow.most_common(5)))
+    bow2 = make_bag_of_words(test[1])
+    bow3 = make_bag_of_words(test[2])
+    bow4 = make_bag_of_words(test[3])
+    bow5 = make_bag_of_words(test[4])
+    bow6 = make_bag_of_words(test[5])
+
+    calculate_bow_relation_to_cluster(bow)
+    calculate_bow_relation_to_cluster(bow2)
+    calculate_bow_relation_to_cluster(bow3)
+    calculate_bow_relation_to_cluster(bow4)
+    calculate_bow_relation_to_cluster(bow5)
+    calculate_bow_relation_to_cluster(bow6)
     pass
 
 

@@ -1,33 +1,30 @@
-class haver:
-    def __init__(self, name, location, phone):
-        self.name = name
-        self.city = location
-        self.phone = phone
-        self.facebook_id = ''
+class Haver:
+    def __init__(self, name, facebook_id):
+        self.facebook_profile_name = name
+        self.facebook_profile_id = facebook_id
 
     def __str__(self):
-        return 'Name: ' + self.name + ' Location: ' + self.city + '. (Haver)'
+        return "User {}.".format(self.facebook_profile_name)
 
     def to_tuple(self):
-        return self.name, self.city, self.phone, self.facebook_id
+        return self.facebook_profile_name, self.facebook_profile_id
 
 
-class haver_cert:
-    def __init__(self, name, location, phone, facebook_id, email, occupation, langs):
+class HaverCertified:
+    def __init__(self, name, location, phone, facebook_id, email, occupation, languages):
         self.name = name
-        self.city = location
+        self.location = location
         self.phone = phone
         self.facebook_id = facebook_id
         self.email = email
         self.occupation = occupation
-        self.langs = langs
+        self.spoken_languages = languages
 
     def __str__(self):
-        return 'Name: ' + self.name + ' Location: ' + self.city + ' Job: ' + self.occupation + '. (Cert)'
+        return "User: {} [location: {}, phone: {}]".format(self.name, self.location, self.phone)
 
     def to_tuple(self):
         languages = ""
-        for lang in self.langs:
+        for lang in self.spoken_languages:
             languages = languages + lang + '+'
-
-        return self.name, self.city, self.phone, self.facebook_id, self.email, self.occupation, languages[:-1]
+        return self.name, self.location, self.phone, self.facebook_id, self.email, self.occupation, languages[:-1]
