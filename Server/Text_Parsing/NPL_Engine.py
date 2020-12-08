@@ -15,12 +15,13 @@ nltk.download('wordnet')
 """
 
 # Word2vec related:
-MODEL = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True, limit=100000)
-CLUSTER = [x[0] for x in MODEL.most_similar(positive=["volunteer", "help", "contribution"],
-                                            negative=["hate", "stupid", "annoying", "racism"],
-                                            topn=125)]
-
-print("The cluster: ", CLUSTER)
+MODEL = KeyedVectors.load_word2vec_format('Text_Parsing/GoogleNews-vectors-negative300.bin',
+                                          binary=True, limit=100000)
+POST_CLUSTER = [x[0] for x in MODEL.most_similar(positive=["volunteer", "help", "contribution", "love"],
+                                                 negative=["hate", "stupid", "annoying", "racism"],
+                                                 topn=125)]
+HEALTH_CLUSTER = [x[0] for x in MODEL.most_similar(positive=["help", "medicine", "hurt", "injured", "doctor", "pain",
+                                                             "feeling", "sick", "headache", "ache"], topn=100)]
 
 # Topic identification related:
 STOPWORDS = set(stopwords.words('english'))
@@ -65,14 +66,15 @@ def make_bag_of_words(document):
 
 def calculate_bow_relation_to_cluster(bag_of_words):
     """
-        calculate_bow_relation_to_cluster: This function will calculate the resemblance of the BOW to the word cluster.
+        calculate_bow_relation_to_cluster: This function will calculate the resemblance of the BOW to the word cluster
+        and returns a "resemblance score".
     """
     total_score = 0
-    valid_word_count = 1
+    valid_word_count = 0
     for word_from_bag, occurrences in bag_of_words.items():
         if word_from_bag in MODEL:
-            for word_from_cluster in CLUSTER:
-                current_iteration_score = MODEL.similarity(word_from_bag, word_from_cluster)
+            for word_from_cluster in POST_CLUSTER:
+                current_iteration_score = MODEL.similarity(word_from_bag, word_from_cluster) * occurrences
                 total_score = total_score + current_iteration_score
                 # print("testing {} with {} = {}".format(word_from_bag, word_from_cluster, current_iteration_score))
             valid_word_count = valid_word_count + 1
@@ -80,15 +82,30 @@ def calculate_bow_relation_to_cluster(bag_of_words):
         total_score = total_score / valid_word_count
     else:
         total_score = 0
-    print(total_score)
-    pass
+    return total_score
 
 
-def main():
+def determine_emergency_query(query):
+    total_score = 0
+    valid_word_count = 0
+    for word in query.strip().split():
+        if word in MODEL:
+            for word_from_cluster in HEALTH_CLUSTER:
+                current_iteration_score = MODEL.similarity(word, word_from_cluster)
+                total_score += current_iteration_score
+            valid_word_count += 1
+    if valid_word_count != 0:
+        total_score = total_score / valid_word_count
+    else:
+        total_score = 0
+    return total_score
+
+
+def main_bow():
     """
         Used for testing only.
     """
-    test = ["Avengers: Infinity War was a 2018 American superhero film based on the Marvel Comics superhero team the " 
+    test = ["Avengers: Infinity War was a 2018 American superhero film based on the Marvel Comics superhero team the "
             "Avengers. It is the 19th film in the Marvel Cinematic Universe (MCU). The running time of the movie was "
             "149 minutes and the box office collection was around 2 billion dollars. (Source: Wikipedia) ",
             "Volunteering allows you to connect to your community and make it a better place. ... And volunteering is "
@@ -118,5 +135,24 @@ def main():
     pass
 
 
+def main_query():
+    print(determine_emergency_query("headache"))
+
+    queries = [
+        "I need a doctor",
+        "I need a doctor I don't feel well",
+        "I need to buy medicine",
+        "My head hurts",
+        "I have a headache",
+        "supermarket",
+        "I love unicorns",
+        "I want a stick up my ass",
+        "u gay",
+        "son of a bitch"
+    ]
+    for query in queries:
+        print(determine_emergency_query(query))
+
+
 if __name__ == '__main__':
-    main()
+    main_query()

@@ -1,13 +1,12 @@
 class Haver:
-    def __init__(self, name, facebook_id):
-        self.facebook_profile_name = name
+    def __init__(self, facebook_id):
         self.facebook_profile_id = facebook_id
 
     def __str__(self):
-        return "User {}.".format(self.facebook_profile_name)
+        return "User {}.".format(self.facebook_profile_id)
 
     def to_tuple(self):
-        return self.facebook_profile_name, self.facebook_profile_id
+        return tuple([self.facebook_profile_id])
 
 
 class HaverCertified:
