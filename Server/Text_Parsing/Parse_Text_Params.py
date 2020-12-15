@@ -1,5 +1,5 @@
 import json
-from Haverim_DB.haverim_class import haver
+from Haverim_DB.haverim_class import Haver
 
 
 def parse_post_class_haver(text, cities=[], names=[]):

@@ -8,7 +8,7 @@ def main():
     print('Binding to port. - main')
 
     try:
-        handler = DatabaseHandler(host='localhost', password='AnthonNaivelt123')
+        handler = DatabaseHandler(host='localhost', user='root', password='cleo_anthon_123')
 
         server = ServerThread(socket, handler)
         server.t.join()
