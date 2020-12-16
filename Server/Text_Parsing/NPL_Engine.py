@@ -14,6 +14,11 @@ nltk.download('punkt')
 nltk.download('wordnet')
 """
 
+
+# Thresholds:
+EMERGENCY_THRESHOLD = 11
+HAVER_THRESHOLD = 8.5
+
 # Word2vec related:
 MODEL = KeyedVectors.load_word2vec_format('Text_Parsing/GoogleNews-vectors-negative300.bin',
                                           binary=True, limit=100000)
@@ -21,7 +26,7 @@ POST_CLUSTER = [x[0] for x in MODEL.most_similar(positive=["volunteer", "help", 
                                                  negative=["hate", "stupid", "annoying", "racism"],
                                                  topn=125)]
 HEALTH_CLUSTER = [x[0] for x in MODEL.most_similar(positive=["help", "medicine", "hurt", "injured", "doctor", "pain",
-                                                             "feeling", "sick", "headache", "ache"], topn=100)]
+                                                             "feeling", "sick", "headache", "ache", "drugs"], topn=100)]
 
 # Topic identification related:
 STOPWORDS = set(stopwords.words('english'))
@@ -82,22 +87,26 @@ def calculate_bow_relation_to_cluster(bag_of_words):
         total_score = total_score / valid_word_count
     else:
         total_score = 0
+    print(total_score)
     return total_score
 
 
 def determine_emergency_query(query):
     total_score = 0
-    valid_word_count = 0
+    iteration_counter = 0
+    query = clean(query)
     for word in query.strip().split():
         if word in MODEL:
             for word_from_cluster in HEALTH_CLUSTER:
                 current_iteration_score = MODEL.similarity(word, word_from_cluster)
                 total_score += current_iteration_score
-            valid_word_count += 1
-    if valid_word_count != 0:
-        total_score = total_score / valid_word_count
+                # print("testing {} with {} = {}".format(word, word_from_cluster, current_iteration_score))
+            iteration_counter += 1
+    if iteration_counter != 0:
+        total_score = total_score / iteration_counter
     else:
         total_score = 0
+    print(total_score)
     return total_score
 
 
@@ -136,7 +145,7 @@ def main_bow():
 
 
 def main_query():
-    print(determine_emergency_query("headache"))
+    print("test: ", determine_emergency_query("headache"))
 
     queries = [
         "I need a doctor",
@@ -144,6 +153,7 @@ def main_query():
         "I need to buy medicine",
         "My head hurts",
         "I have a headache",
+        "I am having trouble breathing",
         "supermarket",
         "I love unicorns",
         "I want a stick up my ass",
@@ -155,4 +165,4 @@ def main_query():
 
 
 if __name__ == '__main__':
-    main_query()
+    main_bow()

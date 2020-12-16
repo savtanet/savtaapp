@@ -1,3 +1,5 @@
+# ***** NOT IN USE ******
+
 from nltk.tokenize import sent_tokenize, word_tokenize
 import gensim.downloader as wv
 

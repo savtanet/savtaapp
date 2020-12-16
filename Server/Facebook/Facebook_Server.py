@@ -1,6 +1,6 @@
 import threading
 import time
-from Facebook.Posts_Parser import get_haverim_from_facebook
+from Revision_One.Posts_Parser import get_haverim_from_facebook
 
 
 class FacebookCrawler(threading.Thread):

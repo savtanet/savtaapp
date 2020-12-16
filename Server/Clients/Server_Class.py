@@ -1,5 +1,6 @@
 import threading
 from Clients.Client_Class import ClientThread
+from Text_Parsing import NPL_Engine
 
 
 class ServerThread(threading.Thread):
@@ -12,17 +13,12 @@ class ServerThread(threading.Thread):
         self.t.start()
 
     def execute(self):
-        clients = []
-
         while True:
             try:
                 print('Server thread is now listening. - server')
                 self.server_socket.listen()
                 client_socket, client_address = self.server_socket.accept()
 
-                clients.append(ClientThread(client_socket=client_socket,
-                                            client_address=client_address,
-                                            db_handler=self.handler))
-
+                ClientThread(client_socket=client_socket, client_address=client_address, db_handler=self.handler)
             except KeyboardInterrupt:
                 raise Exception(KeyboardInterrupt)

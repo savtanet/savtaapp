@@ -1,10 +1,10 @@
-from Clients.Connection import bind_to_port
+from Clients.Connection import BindToPort
 from Clients.Server_Class import ServerThread
 from Haverim_DB.DB_Handler import DatabaseHandler
 
 
 def main():
-    socket = bind_to_port(80)
+    socket = BindToPort(80)
     print('Binding to port. - main')
 
     try:

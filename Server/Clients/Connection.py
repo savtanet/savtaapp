@@ -1,6 +1,7 @@
 import socket
 
-def bind_to_port(port):
+
+def BindToPort(port):
     try:
         # Create a TCP/IP socket
         listening_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,7 +12,6 @@ def bind_to_port(port):
     except Exception as e:
         print("Error: ", e)
         return None
-
     return listening_sock
 
 

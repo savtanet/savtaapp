@@ -1,11 +1,11 @@
 import threading
-
 from Clients.Connection import send_to_client, receive_from_client
 from Text_Parsing.Parse_Text_Params import add_html_headers
 from Text_Parsing.Parse_Text_Params import convert_error_to_json
-from Text_Parsing.Parse_Text_Params import convert_haver_to_json
+from Text_Parsing.Parse_Text_Params import emergency_contact_json
+from Text_Parsing.Parse_Text_Params import convert_tuple_to_json
 from Text_Parsing.Parse_Text_Params import parse_get_request
-from Text_Parsing.Parse_Text_Params import parse_request_words
+from Text_Parsing.NPL_Engine import determine_emergency_query, EMERGENCY_THRESHOLD
 
 
 class ClientThread(threading.Thread):
@@ -19,40 +19,30 @@ class ClientThread(threading.Thread):
         self.t.start()
 
     def execute(self):
-        # Receiving data from the client
         client_http_get_request = receive_from_client(self.client_socket)
         if client_http_get_request is not None:
-            request, languages, location = parse_get_request(client_http_get_request)
+            request, location, language = parse_get_request(client_http_get_request)
+
+            if request is not None and language is not None and location is not None:
+                emergency = False
+                emergency_request_score = determine_emergency_query(request)
+                if emergency_request_score > EMERGENCY_THRESHOLD:
+                    emergency = True
+
+                return_list = convert_tuple_to_json(self.handler.get_haver_near_you(location, language))
+                if not return_list:
+                    error_object = {'Error': 'no suitable haver was found'}
+                    send_to_client(convert_error_to_json(error_object), self.client_socket)
+                    self.client_socket.close()
+                    return
+
+                if emergency:
+                    return_list = emergency_contact_json() + return_list
+
+                http_response = add_html_headers(str(return_list))
+                send_to_client(http_response, self.client_socket)
+                self.client_socket.close()
+                return
         else:
+            self.client_socket.close()
             return
-
-        if request is not None and languages is not None and languages is not [] and location is not None:
-            special_requirement = parse_request_words(request)
-            print('Clients valid requirements: {} + {} + {}. - client'.format(location, languages, special_requirement))
-            if special_requirement is None:
-                print("No special assistance required. - client")
-                haver = self.handler.get_haverim_cert_where_location_langs(location, languages)
-            else:
-                print("Client requires special assistance. - client")
-                haver = self.handler.get_haverim_cert_where_location_occupation_langs(location, special_requirement, languages)
-            try:
-                if haver is []:
-                    raise TypeError
-                else:
-                    haver = haver[0]
-                    print("Engine returned {} as the most suitable haver. - client".format(haver))
-                    json_obj = convert_haver_to_json(haver)
-                    html_response = add_html_headers(json_obj)
-                    send_to_client(html_response, self.client_socket)
-
-            except IndexError:
-                json_obj = {'Error': 'no suitable haver was found'}
-                send_to_client(convert_error_to_json(json_obj), self.client_socket)
-                print("No suitable haver was found. - client")
-
-        else:
-            print('Client {} has sent an invalid request. - client'.format(self.client_address))
-
-        # Closing the socket
-        self.client_socket.close()
-        return

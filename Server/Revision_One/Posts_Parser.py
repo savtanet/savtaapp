@@ -1,8 +1,9 @@
+# ***** NOT IN USE ******
+
 import json
-import Text_Parsing.Parse_Text_W2V  # used to load google w2v module to memory.
 from Text_Parsing.Parse_Text_Params import parse_post_class_haver
-from Text_Parsing.Parse_Text_W2V import calculate_diff, calculate_paragraph
-from Facebook.Facebook_API import get_posts_curl
+from Revision_One.Parse_Text_W2V import calculate_diff, calculate_paragraph
+from Revision_One.Facebook_API import get_posts_curl
 
 
 def get_haverim_from_facebook(last_post):

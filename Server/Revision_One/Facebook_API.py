@@ -1,3 +1,5 @@
+# ***** NOT IN USE ******
+
 import pycurl
 import certifi
 from io import BytesIO

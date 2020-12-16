@@ -4,6 +4,7 @@ from Haverim_DB.haverim_class import Haver
 from facebook_scraper import get_posts
 from deep_translator import GoogleTranslator
 from Text_Parsing import NPL_Engine
+from Text_Parsing.Parse_Text_Params import clean_post
 
 
 from Haverim_DB.DB_Handler import DatabaseHandler
@@ -37,22 +38,12 @@ class GroupCrawler:
             score_list.append(NPL_Engine.calculate_bow_relation_to_cluster(bow_list[-1]))
 
         for score, facebook_id in zip(score_list, user_id_list):
-            if score > 8.5:
+            if score > NPL_Engine.HAVER_THRESHOLD:
                 new_haver = Haver(facebook_id)
                 self._handler.add_haver_to_db(new_haver)
                 self._handler.commit()
 
         return user_id_list
-
-
-def clean_post(text):
-    split_text = text.split()
-    if not split_text:
-        return ""
-    else:
-        no_whitespaces = [i.strip().rstrip() for i in split_text]
-        no_invalid_strings = [i for i in no_whitespaces if i.isalpha()]
-        return " ".join(no_invalid_strings)
 
 
 def main():

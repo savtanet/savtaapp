@@ -38,6 +38,12 @@ class DatabaseHandler:
         self.cursor.execute(get_all_haverim_cert_formula)
         return self.cursor.fetchall()
 
+    def get_haver_near_you(self, location, language):
+        get_haver_near_same_language = "SELECT * FROM HaverCertified WHERE location = %s AND spoken_languages LIKE " \
+                                       "CONCAT('%', %s, '%') "
+        self.cursor.execute(get_haver_near_same_language, (location, language))
+        return self.cursor.fetchall()
+
     def commit(self):
         self.db.commit()
 
