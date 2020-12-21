@@ -3,7 +3,7 @@ from Haverim_DB.DB_Handler import DatabaseHandler
 
 
 # Insert names or IDs of groups that you would like to scrape
-GROUPS = ["879404338742203", "1244613082279475", "148441651998410", "Israel.Volunteering"]
+GROUPS = ["1244613082279475", "148441651998410", "Israel.Volunteering"", 879404338742203"]
 
 
 def main():

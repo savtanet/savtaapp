@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import threading
+import time
 from Haverim_DB.haverim_class import Haver
 from facebook_scraper import get_posts
 from deep_translator import GoogleTranslator
@@ -26,10 +27,11 @@ class GroupCrawler:
         bow_list = []
         score_list = []
 
-        for post in get_posts(group=self.group, pages=1):
+        for post in get_posts(group=self.group, pages=10):
             text = clean_post(post['text'])
             user_id = str(post['user_id'])
             if text != "" and user_id is not None and user_id != "None":
+                time.sleep(0.2)
                 translated_posts.append(self._translator.translate(text))
                 user_id_list.append(str(post['user_id']))
 
@@ -47,7 +49,9 @@ class GroupCrawler:
 
 
 def main():
-    crawler = GroupCrawler("Israel.Volunteering", DatabaseHandler(host="localhost", user="root", password="cleo_anthon_123"))
+    crawler = GroupCrawler("Israel.Volunteering", DatabaseHandler(host="localhost",
+                                                                  user="root",
+                                                                  password="cleo_anthon_123"))
     ids = crawler.scrape()
     print(ids)
 
